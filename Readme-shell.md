@@ -1,4 +1,4 @@
-# Retail DREAM Demo in a Box Setup Guide
+# Retail2.0 DREAM Demo in a Box Setup Guide
 
 ## What is it?
 DREAM Demos in a Box (DDiB) are packaged Industry Scenario DREAM Demos with ARM templates (with a demo web app, Power BI reports, Synapse resources, AML Notebooks etc.) that can be deployed in a customer’s subscription using the CAPE tool in a few hours.  Partners can also deploy DREAM Demos in their own subscriptions using DDiB.
@@ -11,7 +11,7 @@ Customers can play,  get hands-on experience navigating through the demo environ
 
 ## :exclamation:IMPORTANT NOTES:  
 
-  1. **Please read the [license agreement](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/main/CDP-Retail/license.md) and [disclaimer](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/main/CDP-Retail/disclaimer.md) before proceeding, as your access to and use of the code made available hereunder is subject to the terms and conditions made available therein.**
+  1. **Please read the [license agreement](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/main/CDP-Retail/license.md) and [disclaimer](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/main/CDP-Retail/disclaimer.md) before proceeding, as your access to and use of the code made available hereunder is subject to the terms and conditions made available therein.** Any third party tool used in the demo is not owned by us and you will have to buy the licenses for extended use.
   2. Without limiting the terms of the [license](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/main/CDP-Retail/license.md) , any Partner distribution of the Software (whether directly or indirectly) may only be made through Microsoft’s Customer Acceleration Portal for Engagements (“CAPE”). CAPE is accessible by Microsoft employees. For more information about the CAPE process, please connect with your local Data & AI specialist or CSA/GBB.
   3. Please note that **Azure hosting costs** are involved when DREAM Demos in a Box are implemented in customer or partner Azure subscriptions. **Microsoft will not cover** DDiB hosting costs for partners or customers.
   4. Since this is a DDiB, there are certain resources open to the public. **Please ensure proper security practices are followed before you add any sensitive data into the environment.** To strengthen the security posture of the environment, **leverage Azure Security Centre.** 
@@ -41,12 +41,13 @@ THIS DEMO/LAB PROVIDES CERTAIN SOFTWARE TECHNOLOGY/PRODUCT FEATURES AND FUNCTION
   - [Task 2: Power BI Workspace creation](#task-2-power-bi-workspace-creation)
   - [Task 3: Deploy the ARM Template](#task-3-deploy-the-arm-template)
   - [Task 4: Run the Cloud Shell to provision the demo resources](#task-4-run-the-cloud-shell-to-provision-the-demo-resources)
-  - [Task 5: Power BI reports and dashboard creation](#task-5-power-bi-reports-and-dashboard-creation)
+  - [Task 5: Lake Database creation and Pipeline execution](#task-5-lake-database-creation-and-pipeline-execution)
+  - [Task 6: Power BI reports and dashboard creation](#task-6-power-bi-reports-and-dashboard-creation)
   	- [Steps to create Real time report](#steps-to-create-real-time-report)
   	- [Updating Dashboard and Report Ids in Web app](#updating-dashboard-and-report-ids-in-web-app)
-  - [Task 6: QnAmaker and LogicApp Configuration](#task-6-qnamaker-and-logicapp-configuration)
-  - [Task 7: Pause or Resume script](#task-7-pause-or-resume-script)
-  - [Task 8: Clean up resources](#task-8-clean-up-resources)
+  - [Task 7: QnAmaker and LogicApp Configuration](#task-7-qnamaker-and-logicapp-configuration)
+  - [Task 8: Pause or Resume script](#task-8-pause-or-resume-script)
+  - [Task 9: Clean up resources](#task-9-clean-up-resources)
 
 <!-- /TOC -->
 
@@ -129,49 +130,6 @@ THIS DEMO/LAB PROVIDES CERTAIN SOFTWARE TECHNOLOGY/PRODUCT FEATURES AND FUNCTION
 
 	> **Note:** This workspace ID will be used during ARM template deployment.
 
-7. Go to your Power BI **workspace** and **click** on New button. 
-
-8. Then **click** on **Streaming Dataset** option from the dropdown. 
-
-	![Select new and then steaming dataset.](media/power-bi-4.png)
-
-9. **Select API** from the list of options and **click** next. 
-
-10. **Enable** the ‘Historic data analysis’ 
-
-	![Select API then next.](media/power-bi-5.png)
-
-	![Switch Historical data analysis on.](media/power-bi-6.png)
-
-11. **Enter** ‘Tax Collection Realtime’ as dataset name and **enter** the column names in “values from stream” option from list below  and **click** on create button: 
-
-	| Field Name                        | Type     |
-	|-----------------------------------|----------|
-	| VATBefore 						| number   |
-	| VATMid  							| number   |
-	| VATAfter  						| number   |
-	| TaxPayerSatisfactionBefore  		| number   |
-	| TaxPayerSatisfactionMid  			| number   |
-	| TaxPayerSatisfactionAfter  		| number   |
-	| TaxpayersBefore  					| number   |
-	| TaxpayersMid  					| number   |
-	| TaxpayersAfter  					| number   |
-	| RecordedOn  						| datetime |
-	| VATMax  							| number   |
-	| TaxPayerSatisfactionTarget  		| number   |
-	| TaxPayerSatisfactionMax  			| number   |
-	| VATTargetBefore 				 	| number   |
-	| VATTargetMid					  	| number   |
-	| VATTargetAfter  					| number   |
-	| TaxpayersTargetBefore 		  	| number   |
-	| TaxpayersTargetMid  				| number   |
-	| TaxpayersTargetAfter				| number   |
-	
-	![Create new streaming dataset.](media/power-bi-7.png)
-
-12. **Copy** the push url of dataset ‘Tax Collection Realtime’ and place it in a notepad for later use.
-
-	![Provide the Push Url.](media/power-bi-8.png)
 
 
 
@@ -179,7 +137,7 @@ THIS DEMO/LAB PROVIDES CERTAIN SOFTWARE TECHNOLOGY/PRODUCT FEATURES AND FUNCTION
 
 1. **Open** this link in a new tab of the same browser that you are currently in: 
 	
-	<a href='https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FAzure-Analytics-and-AI-Engagement%2Fretail%2Fretaildemo%2Fmain-template.json' target='_blank'><img src='http://azuredeploy.net/deploybutton.png' /></a>
+	<a href='https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FAzure-Analytics-and-AI-Engagement%2Fretail2.0%2Fretail%2FSynapseSetup.json' target='_blank'><img src='http://azuredeploy.net/deploybutton.png' /></a>
 
 2. On the Custom deployment form, **select** your desired Subscription.
 
@@ -239,7 +197,7 @@ THIS DEMO/LAB PROVIDES CERTAIN SOFTWARE TECHNOLOGY/PRODUCT FEATURES AND FUNCTION
 4. In the Azure Cloud Shell window, ensure the PowerShell environment is selected and **enter** the following command to clone the repository files.
 Command:
 ```
-git clone -b retail https://github.com/microsoft/Azure-Analytics-and-AI-Engagement.git retail
+git clone -b retail2.0 https://github.com/microsoft/Azure-Analytics-and-AI-Engagement.git retail
 ```
 
 ![Git Clone Command to Pull Down the demo Repository.](media/cloud-shell-4.png)
@@ -248,15 +206,15 @@ git clone -b retail https://github.com/microsoft/Azure-Analytics-and-AI-Engageme
 
 > **Note**: When executing scripts, it is important to let them run to completion. Some tasks may take longer than others to run. When a script completes execution, you will be returned to a command prompt. 
 
-5. **Execute** the retailSetup.ps1 script by executing the following command:
+5. **Execute** the SynapseSetup.ps1 script by executing the following command:
 Command:
 ```
-cd ./retail/retaildemo
+cd ./retail/retail
 ```
 
 6. Then **run** the PowerShell: 
 ```
-./retailSetup.ps1
+./SynapseSetup.ps1
 ```
     
 ![Commands to run the PowerShell Script.](media/cloud-shell-5.png)
@@ -316,7 +274,7 @@ cd ./retail/retaildemo
 
 21. You will get another code to authenticate an Azure PowerShell script for creating reports in Power BI. **Copy** the code.
 	> **Note:**
-	> Note: You may see errors in script execution if you  do not have necessary permissions for cloudshell to manipulate your Power BI workspace. In such case follow this document [Power BI Embedding](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/retail/retaildemo/Power%20BI%20Embedding.md) to get the necessary permissions assigned. You’ll have to manually upload the reports to your Power BI workspace by downloading them from this location [Reports](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/tree/retail/retaildemo/artifacts/reports). 
+	> Note: You may see errors in script execution if you  do not have necessary permissions for cloudshell to manipulate your Power BI workspace. In such case follow this document [Power BI Embedding](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/retail/retaildemo/Power%20BI%20Embedding.md) to get the necessary permissions assigned. You’ll have to manually upload the reports to your Power BI workspace by downloading them from this location [Reports](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/tree/retail/retaildemo/artifacts/reports). Or you can execute the PowerBI Subscript from local PowerShell. 
 
 22. **Click** the link [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin).
 
@@ -338,431 +296,54 @@ cd ./retail/retaildemo
 
 	> **Note:** The deployment will take approximately 50-55 minutes to complete. Keep checking the progress with messages printed in the console to avoid timeout.
 
-26. After complete script has been executed, you get to see a messages "--Execution Complete--", above which there are 3 links available as show in the image below. **Click** on each of those links once and then after the page loads close the brower tabs.
-
-	![Click on the link.](media/cloud-shell-20.png)
-	
-	> Note: Clicking these links will ensure that the data simulator applications gets start and will not dislplay ani UI on browser page, instead may give error like 404, which is its expected behaviour.
-	
-27. If you don't have admin permission, Please ask your admin to execute the following command for proper execution of Immersive Reader application.
-
-	![Click on the link.](media/csu-permission.png)
+26. After complete script has been executed, you get to see a messages "--Execution Complete--".
       
-### Task 5: Power BI reports and dashboard creation
+### Task 5: Lake Database creation and Pipeline execution
 
-1. **Open** Power BI and **Select** the Workspace, which is created in [Task 2](#task-2-power-bi-workspace-creation).
-	
-	![Select Workspace.](media/power-bi-report-3.png)
-	
-Once [Task 4](#task-4-run-the-cloud-shell-to-provision-the-demo-resources) has been completed successfully and the template has been deployed, you will be able to see a set of reports in the Reports tab of Power BI, and real-time datasets in the Dataset tab. 
+1. **Click** on the synapse resource and **click** on the open synapse studio in the next window.
 
-The image on the below shows the Reports tab in Power BI.  We can create a Power BI dashboard by pinning visuals from these reports.
+![Resource.](media/lake-db-pipeline-1.png)
 
-![Reports Tab.](media/power-bi-report-4.png)
-	
-> **Note:** If you do not see this list in your workspace after script execution, it may indicate that something went wrong during execution. You may use the subscript to patch it or manually upload the reports from this location and changing their parameters appropriately before authentication.
+![Workspace.](media/lake-db-pipeline-2.png)
 
-To give permissions for the Power BI reports to access the data sources:
+2. **Click** on the data icon on sidebar, then **click** on the "+" sign and then **click** on the Lake database.
 
-6. **Click** the ellipses or settings icon on top right-side corner.
+![Workspace.](media/lake-db-pipeline-3.png)
 
-7. **Click** the settings dropdown.
+3. **Enter** the name of the Lake database as **"WWImportersContosoRetailLakeDB"** and **click** on Publish all.
 
-8. **Click** on settings.
+![Workspace.](media/lake-db-pipeline-4.png)
 
-	![Permission.](media/power-bi-report-5.png)
+4. A new window appears, here **click** on Publish.
 
-9. **Click** on ‘Datasets’ tab.
-	
-	![Dataset.](media/power-bi-report-6.png)
-	
-10. **Click** on the Taxpayer Client Services Report.
+![Workspace.](media/lake-db-pipeline-7.png)
 
-11. **Expand** Data source credentials.
+5. **Click** on the integrate icon on sidebar, **expand** the Pipelines, next **expand** the folder containing the desired pipelines, **click** on the pipeline.
 
-12. **Click** Edit credentials and a dialogue box will pop up.
+![Workspace.](media/lake-db-pipeline-5.png)
 
-	![Data Source Creds.](media/power-bi-report-7.png)
+6. **Click** on Add trigger and then **click** on Trigger now.
 
-> **Note:** Verify the server name has been updated to your current sql pool name for all the datasets. If not, update the same under parameters section and click apply.
+![Workspace.](media/lake-db-pipeline-6.png)
 
-13. **Enter** Username as ‘labsqladmin’.
+7. Perform the above action with the remaining 2  pipelines in the folder, the desired tables will be created under the newly created Lake database.
 
-14. **Enter** the same SQL Administrator login password that was created for [Task 3](#task-3-deploy-the-arm-template) Step #5
+### Task 6: Power BI reports and dashboard creation
 
-15. **Click** on Sign in.
 
-	![Validate Creds.](media/power-bi-report-8.png)
-	
-Follow these steps to create the Power BI dashboard:
-
-16. **Select** the workspace created in [Task 2](#task-2-power-bi-workspace-creation).
-
-	![Select Workspace.](media/power-bi-report-9.png)
-	
-17. **Click** on ‘+ New’ button on the top-right navigation bar.
-
-18. **Click** the ‘Dashboard’ option from the drop-down menu.
-
-      ![New Dashboard.](media/power-bi-report-10.png)
-
-19. **Name** the dashboard ‘Taxpayer Client Services Commissioner Dashboard Before’ and **click** “create”. 
-
-20. This new dashboard will appear in the Content section (of the Power BI workspace). 
-	
-	![Create Dashboard.](media/power-bi-report-11.png)
-
-Do the following to pin visuals to the dashboard you just created:
-
-**Pillar 3: Market Perception** 
-
-21. **Select** the workspace in [Task 2](#task-2-power-bi-workspace-creation).
-
-	![Select Workdspace.](media/power-bi-report-12.png)
-
-22. **Click** on the “Content” section/tab.
-
-	![Click Content.](media/power-bi-report-13.png)
-
-23. In the “Content” section, there will be a list of all the published reports.
-
-24. **Click** on ‘Taxpayer Client Services Report’ Report.
-
-	![Click on Report.](media/power-bi-report-14.png)
-	
-25. **Click** on ‘Pilar 4 A’ page.
-
-26. There you can see Before and After KPIs for using on the same Dashboard.
-
-27. **Hover** over the Awareness KPI & **Click** on pin visual button.
-
-	![Click on Pilar then Hover and then Pin Visual.](media/power-bi-report-15.png)
-
-28. **Select** ‘Existing dashboard’ radio button. 
-
-29. From ‘select existing dashboard’ dropdown, **select** ‘Taxpayer Client Services Commissioner Dashboard Before’.
-
-30. **Click** ‘Pin’.
-
-	![Select Dashboard and click Pin.](media/power-bi-report-16.png)
-	
-31. Similarly, **pin** the others tiles to the Dashboard
-
-	![Pin other dashboards.](media/power-bi-report-17.png)
-	
-32. **Select** workpace created in [Task 2](#task-2-power-bi-workspace-creation) in the left pane.
-
-	![Select Workspace.](media/power-bi-report-18.png)
-	
-33. **Open** ‘Taxpayer Client Services Report’ report.
-
-	![Select Workspace.](media/power-bi-report-19.png)
-	
-34. **Click** on Images page
-
-36. **Click** on Edit.
-
-	![Click on edit.](media/power-bi-report-20.png)
-	
-36. **Hover** on Deep Dive chicklet and **click** pin button.
-
-	![Hover and Click.](media/power-bi-report-21.png)
-	
-37. Select the ‘Taxpayer Client Services Commissioner Dashboard Before’ from existing dashboard list and **click** on pin.
-
-38. Similarly pin rest of the images from Images of the  Taxpayer Client Services Report’ report.
-	
-	![Select Dashboard and Click Pin.](media/power-bi-report-22.png)
-	
-39. **Go back** to the ‘Taxpayer Client Services Commissioner Dashboard Before’ dashboard.
-
-	![Go back to Dashboard.](media/power-bi-report-23.png)
-	
-To hide title and subtitle for all the images that you have pined above. Please do the following:
-
-40. Hover on the chiclet and **Click** on ellipsis ‘More Options’ of the image you selected.
-
-41. **Click** on ‘Edit details’.
-
-	![Click on Edit Details.](media/power-bi-report-24.png)
-	
-42. **Uncheck** ‘Display title and subtitle’.
-
-43. **Click** on ‘Apply’.
-
-44. **Repeat** Step 38 to 41 for all image tiles.
-
-	![Click apply and repeat.](media/power-bi-report-25.png)
-	
-45. After disabling ‘Display title and subtitle’ for all images, **resize** and **rearrange** the top images tiles as shown in the screenshot. 
-	
-	![Resize and Rearrange.](media/power-bi-report-26.png)
-	
-46. Similarly pin left image tiles from ‘page 1’ of chicklets report to the Taxpayer Client Services Commissioner Dashboard Before dashboard.
-
-47. **Resize** and **rearrange** the left images tiles as shown in the screenshot. Resize the KPI tile to 1x2. Resize the Deep Dive to 1x4. Resize the logo to 1x1 size; resize other vertical tiles to 2x1 size.  
-
-	![Resize and Rearrange again.](media/power-bi-report-27.png)
-	
-	
-48. You will see some KPIs or charts like this KPI with title and subtitle. 1. Title, 2. Subtitle.
-	
-	![Will see some KPIs.](media/power-bi-report-28.png)
-	
-49. **Hover** over the cards and charts and go to more options (…)
-
-50. **Click** on Edit Details.
-	
-	![Hover and Click on Edit Details.](media/power-bi-report-29.png)
-	
-51. You will see something like this picture where you can add subtitle.
-
-	![Will see.](media/power-bi-report-30.png)
-	
-52. The Dashboard **Taxpayer Client Services Commissioner Dashboard Before** should finally look like this. Table in following row indicates which KPI’s need to be pinned from which report to achieve this final look.
-
-	![Final Look.](media/power-bi-report-31.png)
-	
-53. **Refer** to this table while pinning rest of the tiles to the dashboard.
-
-	![Table.](media/power-bi-table-1.png)
-	
-54. Here is the list of Dashboards you have to create for TRF and the report to migrate to prod environment. You will see the necessary details for the same below. You must refer to the [Excel](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/retail/retaildemo/KPIS%20Dashboards%20mapping.xlsx) file for pinning the tiles to the dashboard.
-
-	![Final Look.](media/power-bi-report-32.png)
-	
-55. **Tax Collection Commissioner Before** should look like this. Following are the details of tiles for the same.
-
-	![Final Look.](media/power-bi-report-33.png)
-	
-56. **Refer** to this table while pinning rest of the tiles to the dashboard.	
-
-	![Table.](media/power-bi-table-2.png)
-
-57. **Tax Collection Commissioner Mid** should look like this. Following are the details of tiles for the same.
-	
-	![Final Look.](media/power-bi-report-34.png)
-	
-58. **Refer** to this table while pinning rest of the tiles to the dashboard.	
-
-	![Table.](media/power-bi-table-3.png)
-
-59. **Tax Collection Commissioner After** should look like this. Following are the details of tiles for the same.
-
-	![Final Look.](media/power-bi-report-35.png)
-	
-60. **Refer** to this table while pinning rest of the tiles to the dashboard.	
-
-	![Table.](media/power-bi-table-4.png)
-
-61. **Taxpayer Client Services Commissioner After Dashboard** Dashboard should look like this. 
-
-	![Final Look.](media/power-bi-report-36.png)
-	
-62. **Refer** to this table while pinning rest of the tiles to the dashboard.
-
-	![Table.](media/power-bi-table-5.png)
 	
 ### Steps to create Real time report
 
-This task is optional since we have provided static versions of the reports in the package already.
 
-1. **Open** Power BI in a new tab using the following link:
-	[https://app.powerbi.com/](https://app.powerbi.com/).
-
-2. **Sign into** Power BI using your Power BI Pro account.
-
-	![Sign_in_powerbi.](media/power-bi-report-46.png)
-
-> **Note:** Use the same credentials for Power BI which you will be using for the Azure account.
-	
-3. After signing in, **click** the workspaces button from the hamburger menu and **select** the “DDiB-Retail” workspace.
-
-	![Click Workspace.](media/power-bi-report-47.png)
-
-4. **Click** New to expand menu and then **click** Report.
-
-	![Click New and Report.](media/power-bi-report-48.png)
-
-5. **Click** Pick a published dataset.
-	
-	![Click Pick a Public Dashboard.](media/power-bi-report-49.png)
-
-6. **Click** on the desired streaming dataset from the given list, here we are selecting “Tax Collection Realtime” and **click** Create Report.
-
-	![Click desired streaming dataset.](media/power-bi-report-50.png)
-
-7. **Select** the KPI visual or any other required visual from Visualization pane.
-
-8. **Drag** or **select** the required fields from Fields pane to Visualization pane’s Field tab.
-
-	![Select the KPI, Drag or select required fields.](media/power-bi-report-51.png)
-
-9. Similarly, **create** other visuals and **save** the Power BI Report. You can also pin the visuals to the dashboard.
-
-	![Create other visuals and save the Power BI Report.](media/power-bi-report-52.png)
 
 ### Updating Dashboard and Report Ids in Web app
 
-By default, the web app will be provisioned with Gif placeholders for web app screens with dashboards. Once you have completed the steps listed above in this section, you can update the dashboard id’s generated in to the main web app if you choose. Here are the steps for it.
 
-1. **Navigate** to your Power BI workspace.
+### Task 7: QnAmaker and LogicApp Configuration
 
-2. **Click** on one of the dashboards you created. Eg. Taxpayer Client Services Commissioner Dashboard Before.
 
-	![Navigate and Click.](media/updating-powerbi.png)
 
-3. **Copy** the dashboard id from the url bar at the top.
-	
-	![Copy the dashboard id.](media/updating-powerbi-2.png)
-
-4. **Navigate** to azure portal.
-
-5. **Open** the Azure Cloud Shell by selecting its icon from the top toolbar.
-
-	![Navigate and Open.](media/updating-powerbi-3.png)
-
-6. **Click** on upload/download button.
-
-7. **Click** download.
-
-8. **Enter** the following path:  
-	
-	```
-	retail/retaildemo/retaildemo-app/wwwroot/config.js
-	```
-
-9. **Click** Download button.
-
-	![Enter path and Click download button.](media/updating-powerbi-4.png)
-
-10. **Edit** the downloaded file in notepad.
-
-11. **Paste** the dashboard id you copied earlier between the double quotes of key ‘taxpayer_client_services_before’.
-
-12. **Save** the changes to the file.
-
-	![Edit paste and save.](media/updating-powerbi-5.png)
-
-13. **Navigate** to azure portal.
-
-14. **Open** the Azure Cloud Shell by selecting its icon from the top toolbar.
-
-	![Navigate and Open.](media/updating-powerbi-6.png)
-
-15. **Click** upload/download button.
-
-16. **Click** upload.
-
-17. **Select** the config.js file you just updated.
-
-18. **Click** open.
-
-	![Select and Click open.](media/updating-powerbi-7.png)
-
-19. **Execute** following command in cloudshell:  
-	
-	```
-	cp config.js ./retail/retaildemo/retaildemo-app/wwwroot
-	```
-	
-	![Execute the command.](media/updating-powerbi-8.png)
-
-20.	Execute  following command in cloudshell: 
-	
-	```
-	cd retail/retaildemo/subscripts 
-	./updateWebAppSubScript.ps1
-	```
-	
-	![Execute the command.](media/updating-powerbi-9.png)
-
-21. From the Azure Cloud Shell, **copy** the authentication code. 
-
-22. **Click** on the link [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin) and a new browser window will launch.
-
-	![Copy and Click on Link.](media/updating-powerbi-10.png)
-
-23. **Paste** the authentication code.
-
-24. **Select** appropriate username when prompted.
-
-25. Wait for script execution to complete.
-
-	![Paste select and wait.](media/updating-powerbi-11.png)
-
-> **Note:** You may be prompted to select your subscription if you have multiple subscriptions.
-
-### Task 6: QnAmaker and LogicApp Configuration
-
-1. **Open** the Azure Portal 
-
-2. **Click** on the Azure Cloud Shell icon from the top toolbar. 
-
-	![Open and Click on Azure Cloud Shell.](media/fintax-poc.png)
-
-	**Execute** qna_logicapp_subscript.ps1 script by executing the following command: 
-
-3. **Run** Command: 
-	```
-	cd "retail/retaildemo/subscripts"
-	```
-
-4. Then **run** the PowerShell script: 
-	```
-	./qna_logicapp_subscript.ps1 
-	```
-	![Run the Powershell Script.](media/qna_logicapp-1.png)
-	
-5. You will have to complete the 'az login' and 'device login' authentication by following the steps 7 to 18 of [Task 4](#task-4-run-the-cloud-shell-to-provision-the-demo-resources) and may be prompted to select your subscription if you have multiple subscriptions.
-	
-6. After the subscript is completed, **open** a new tab on your browser and **launch** [qnamaker.ai](https://www.qnamaker.ai/) as below
-
-	![Search QnAmaker.](media/qna_logicapp-2.png)
-	
-7. **Sign In** using the same user credentials which you have used for previous tasks, **go to** the "My knowledge bases" section.
-
-	![Switch section.](media/qna_logicapp-3.png)
-
-8. There will be 3 dropdowns namely "Select tenant", "Select subscription" and "Select service". From the dropdown **select** the appropriate values and in the the service dropdown make sure to select the value starting with "qnamaker-"
-
-	![Select values.](media/qna_logicapp-4.png)
-	
-9. **Click** on the knowledge base name.
-
-	![Knowledge base name.](media/qna_logicapp-5.png)
-	
-10. You will be directed to another screen, **switch** to Publish section and **click** on Publish button.
-
-	![Publish.](media/qna_logicapp-6.png)
-	
-11. The output screen will have some values, **copy** the value of post and concatenate it after the value of host in a notepad.
-
-	![Values host and post.](media/qna_logicapp-7.png)
-	
-12. The concatinated value should appear like below.
-
-	![Values.](media/qna_logicapp-8.png)
-	
-13. **Copy** and **Paste** the value of Authorisation as well in a notepad.
-
-	![Authorisation.](media/qna_logicapp-9.png)
-	
-14. **Go** to the the resource group, search for logic app and **click** on it.
-
-	![Logic App.](media/qna_logicapp-10.png)
-	
-15. Uner the "Development Tools" section **select** "Logic app designer".
-
-	![Logic App.](media/qna_logicapp-11.png)
-	
-16. **Expand** the "KnowledgeBaseAPICall" by clicking on it, **paste** the values for "URI" and "Authentication" from the notepad from step 9 and 10 respectively and finally **click** on "Save".
-
-	![Logic App.](media/qna_logicapp-12.png)
-
-> **Note:** The setup for your Dream Demo in a Box is done here and now you can follow the demo script for testing/demoing your environment.
-
-### Task 7: Pause or Resume script
+### Task 8: Pause or Resume script
 
 > **Note:** Please perform these steps after your demo is done and you do not need the environment anymore. Also ensure you Resume the environment before demo if you paused it once. 
  
@@ -772,10 +353,10 @@ By default, the web app will be provisioned with Gif placeholders for web app sc
 
 	![Open and Click on Azure Cloud Shell.](media/fintax-poc.png)
 
-**Execute** the Pause_Resume_script.ps1 script by executing the following command: 
+**Execute** the Pause_Resume_script.ps1 script by executing the following command: 
 1. **Run** Command: 
 	```
-	cd "retail\retaildemo"
+	cd "retail\retail"
 	```
 
 2. Then **run** the PowerShell script: 
@@ -811,7 +392,7 @@ By default, the web app will be provisioned with Gif placeholders for web app sc
 
 	![Enter your choice.](media/authentication-4.png)
 
-### Task 8: Clean up resources
+### Task 9: Clean up resources
 
 > **Note: Perform these steps after your demo is done and you do not need the resources anymore**
 
@@ -825,7 +406,7 @@ By default, the web app will be provisioned with Gif placeholders for web app sc
 
 2. **Run** Command: 
 	```
-	cd "retail\retaildemo"
+	cd "retail\retail"
 	```
 
 3. Then **run** the PowerShell script: 
@@ -835,7 +416,7 @@ By default, the web app will be provisioned with Gif placeholders for web app sc
 
 	![Run the Powershell Script.](media/authentication-6.png)
 
-4. You will now be prompted to **enter** the resource group name to be deleted in the Azure Cloud Shell. Type the same resource group name that you created in [Task 1](#task-1-create-a-resource-group-in-azure) - 'DDib-Retail'.
+4. You will now be prompted to **enter** the resource group name to be deleted in the Azure Cloud Shell. Type the same resource group name that you created in [Task 1](#task-1-create-a-resource-group-in-azure) - 'DDib-Retail-Lab'.
 
 5. You may be prompted to select a subscription in case your account has multiple subscriptions.
 
