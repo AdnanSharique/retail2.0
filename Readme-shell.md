@@ -330,7 +330,142 @@ cd ./retail/retail
 
 ### Task 6: Power BI reports and dashboard creation
 
+1. **Open** Power BI and **Select** the Workspace, which is created in [Task 2](#task-2-power-bi-workspace-creation).
+	
+	![Select Workspace.](media/power-bi-report-3.png)
+	
+Once [Task 4](#task-4-run-the-cloud-shell-to-provision-the-demo-resources) has been completed successfully and the template has been deployed, you will be able to see a set of reports in the Reports tab of Power BI, and real-time datasets in the Dataset tab. 
 
+The image on the below shows the Reports tab in Power BI.  We can create a Power BI dashboard by pinning visuals from these reports.
+
+![Reports Tab.](media/power-bi-report-4.png)
+	
+> **Note:** If you do not see this list in your workspace after script execution, it may indicate that something went wrong during execution. You may use the subscript to patch it or manually upload the reports from this location and changing their parameters appropriately before authentication.
+
+To give permissions for the Power BI reports to access the data sources:
+
+6. **Click** the ellipses or settings icon on top right-side corner.
+
+7. **Click** the settings dropdown.
+
+8. **Click** on settings.
+
+	![Permission.](media/power-bi-report-5.png)
+
+9. **Click** on ‘Datasets’ tab.
+	
+	![Dataset.](media/power-bi-report-6.png)
+	
+10. **Click** on the Taxpayer Client Services Report.
+
+11. **Expand** Data source credentials.
+
+12. **Click** Edit credentials and a dialogue box will pop up.
+
+	![Data Source Creds.](media/power-bi-report-7.png)
+
+> **Note:** Verify the server name has been updated to your current sql pool name for all the datasets. If not, update the same under parameters section and click apply.
+
+13. **Enter** Username as ‘labsqladmin’.
+
+14. **Enter** the same SQL Administrator login password that was created for [Task 3](#task-3-deploy-the-arm-template) Step #5
+
+15. **Click** on Sign in.
+
+	![Validate Creds.](media/power-bi-report-8.png)
+	
+Follow these steps to create the Power BI dashboard:
+
+16. **Select** the workspace created in [Task 2](#task-2-power-bi-workspace-creation).
+
+	![Select Workspace.](media/power-bi-report-9.png)
+	
+17. **Click** on ‘+ New’ button on the top-right navigation bar.
+
+18. **Click** the ‘Dashboard’ option from the drop-down menu.
+
+      ![New Dashboard.](media/power-bi-report-10.png)
+
+19. **Name** the dashboard ‘After Dashboard’ and **click** “create”. 
+
+20. This new dashboard will appear in the Content section (of the Power BI workspace). 
+	
+	![Create Dashboard.](media/power-bi-report-11.png)
+
+Do the following to pin visuals to the dashboard you just created:
+
+**Pillar 3: Market Perception** 
+
+21. **Select** the workspace in [Task 2](#task-2-power-bi-workspace-creation).
+
+	![Select Workdspace.](media/power-bi-report-12.png)
+
+22. **Click** on the “Content” section/tab.
+
+	![Click Content.](media/power-bi-report-13.png)
+
+23. In the “Content” section, there will be a list of all the published reports.
+
+24. **Click** on ‘CDP Vision Report’ Report and **click** edit.
+
+	![Click on Report.](media/power-bi-report-14.png)
+	
+25. **Click** on ‘Pillar 1 After’ page.
+
+26. There you can see Before and After KPIs for using on the same Dashboard.
+
+27. **Hover** over the Total Campaigns & **Click** on pin visual button.
+
+28. **Select** ‘Existing dashboard’ radio button. 
+
+29. From ‘select existing dashboard’ dropdown, **select** ‘After Dashboard’.
+
+30. **Click** ‘Pin’.
+
+	![Select Dashboard and click Pin.](media/power-bi-report-16.png)
+	
+31. Similarly, **pin** the others tiles to the Dashboard.
+
+	![Pin other dashboards.](media/power-bi-report-17.png)
+	
+32. **Select** workpace created in [Task 2](#task-2-power-bi-workspace-creation) in the left pane.
+
+	![Select Workspace.](media/power-bi-report-18.png)
+	
+33. **Open** ‘Dashboard-Images’ report.
+
+	![Select Workspace.](media/power-bi-report-14.png)
+	
+34. **Hover** on Deep Dive chicklet and **click** pin button.
+
+	![Hover and Click.](media/power-bi-report-21.png)
+	
+35. Select the ‘After Dashboard’ from existing dashboard list and **click** on pin.
+
+36. Similarly pin rest of the images from Images of the ‘Dashboard-Images’ report.
+	
+	![Select Dashboard and Click Pin.](media/power-bi-report-22.png)
+	
+37. **Go back** to the ‘After Dashboard’ dashboard.
+
+	![Go back to Dashboard.](media/power-bi-report-23.png)
+	
+To hide title and subtitle for all the images that you have pined above. Please do the following:
+
+38. Hover on the chiclet and **Click** on ellipsis ‘More Options’ of the image you selected.
+
+39. **Click** on ‘Edit details’.
+
+	![Click on Edit Details.](media/power-bi-report-24.png)
+	
+40. **Uncheck** ‘Display title and subtitle’.
+
+41. **Click** on ‘Apply’.
+
+42. **Repeat** Step 36 to 39 for all image tiles.
+
+	![Click apply and repeat.](media/power-bi-report-25.png)
+	
 	
 ### Steps to create Real time report
 
