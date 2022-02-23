@@ -464,78 +464,68 @@ To hide title and subtitle for all the images that you have pined above. Please 
 
 	![Click apply and repeat.](media/power-bi-report-25.png)
 	
-45. After disabling ‘Display title and subtitle’ for all images, **resize** and **rearrange** the top images tiles as shown in the screenshot. 
+43. After disabling ‘Display title and subtitle’ for all images, **resize** and **rearrange** the top images tiles as shown in the screenshot. 
 	
 	![Resize and Rearrange.](media/power-bi-report-26.png)
 	
-46. Similarly pin left image tiles from ‘page 1’ of chicklets report to the Taxpayer Client Services Commissioner Dashboard Before dashboard.
+44. Similarly pin left image tiles of chiclets report to the After Dashboard dashboard.
 
-47. **Resize** and **rearrange** the left images tiles as shown in the screenshot. Resize the KPI tile to 1x2. Resize the Deep Dive to 1x4. Resize the logo to 1x1 size; resize other vertical tiles to 2x1 size.  
+45. **Resize** and **rearrange** the left images tiles as shown in the screenshot. Resize the KPI tile to 1x2. Resize the Deep Dive to 1x4. Resize the logo to 1x1 size; resize other vertical tiles to 2x1 size.  
 
 	![Resize and Rearrange again.](media/power-bi-report-27.png)
 	
-	
-48. You will see some KPIs or charts like this KPI with title and subtitle. 1. Title, 2. Subtitle.
+46. You will see some KPIs or charts like this KPI with title and subtitle. 1. Title, 2. Subtitle.
 	
 	![Will see some KPIs.](media/power-bi-report-28.png)
 	
-49. **Hover** over the cards and charts and go to more options (…)
+47. **Hover** over the cards and charts and go to more options (…)
 
-50. **Click** on Edit Details.
+48. **Click** on Edit Details.
 	
 	![Hover and Click on Edit Details.](media/power-bi-report-29.png)
 	
-51. You will see something like this picture where you can add subtitle.
+49. You will see something like this picture where you can add subtitle.
 
 	![Will see.](media/power-bi-report-30.png)
 	
-52. The Dashboard **Taxpayer Client Services Commissioner Dashboard Before** should finally look like this. Table in following row indicates which KPI’s need to be pinned from which report to achieve this final look.
+50. The Dashboard **After Dashboard** should finally look like this. Table in following row indicates which KPI’s need to be pinned from which report to achieve this final look.
 
 	![Final Look.](media/power-bi-report-31.png)
 	
-53. **Refer** to this table while pinning rest of the tiles to the dashboard.
+51. **Refer** to this table while pinning rest of the tiles to the dashboard.
 
 	![Table.](media/power-bi-table-1.png)
 	
-54. Here is the list of Dashboards you have to create for TRF and the report to migrate to prod environment. You will see the necessary details for the same below. You must refer to the [Excel](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/fintax/fintaxdemo/KPIS%20Dashboards%20mapping.xlsx) file for pinning the tiles to the dashboard.
+52. Here is the list of Dashboards you have to create for TRF and the report to migrate to prod environment. You will see the necessary details for the same below. You must refer to the [Excel](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/fintax/fintaxdemo/KPIS%20Dashboards%20mapping.xlsx) file for pinning the tiles to the dashboard.
 
 	![Final Look.](media/power-bi-report-32.png)
 	
-55. **Tax Collection Commissioner Before** should look like this. Following are the details of tiles for the same.
+53. **Before Dashboard** should look like this. Following are the details of tiles for the same.
 
 	![Final Look.](media/power-bi-report-33.png)
 	
-56. **Refer** to this table while pinning rest of the tiles to the dashboard.	
+54. **Refer** to this table while pinning rest of the tiles to the dashboard.	
 
 	![Table.](media/power-bi-table-2.png)
 
-57. **Tax Collection Commissioner Mid** should look like this. Following are the details of tiles for the same.
+55. **Chief Customer Officer Dashboard Before** should look like this. Following are the details of tiles for the same.
 	
 	![Final Look.](media/power-bi-report-34.png)
 	
-58. **Refer** to this table while pinning rest of the tiles to the dashboard.	
+56. **Refer** to this table while pinning rest of the tiles to the dashboard.	
 
 	![Table.](media/power-bi-table-3.png)
 
-59. **Tax Collection Commissioner After** should look like this. Following are the details of tiles for the same.
+57. **Finance Dashboard** should look like this. Following are the details of tiles for the same.
 
 	![Final Look.](media/power-bi-report-35.png)
 	
-60. **Refer** to this table while pinning rest of the tiles to the dashboard.	
+58. **Refer** to this table while pinning rest of the tiles to the dashboard.	
 
 	![Table.](media/power-bi-table-4.png)
 
-61. **Taxpayer Client Services Commissioner After Dashboard** Dashboard should look like this. 
-
-	![Final Look.](media/power-bi-report-36.png)
-	
-62. **Refer** to this table while pinning rest of the tiles to the dashboard.
-
-	![Table.](media/power-bi-table-5.png)
-	
 	
 ### Steps to create Real time report
-
 
 
 ### Updating Dashboard and Report Ids in Web app
