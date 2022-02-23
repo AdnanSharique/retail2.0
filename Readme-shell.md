@@ -356,7 +356,7 @@ To give permissions for the Power BI reports to access the data sources:
 	
 	![Dataset.](media/power-bi-report-6.png)
 	
-10. **Click** on the Taxpayer Client Services Report.
+10. **Click** on the CCO Report.
 
 11. **Expand** Data source credentials.
 
@@ -393,8 +393,6 @@ Follow these steps to create the Power BI dashboard:
 	![Create Dashboard.](media/power-bi-report-11.png)
 
 Do the following to pin visuals to the dashboard you just created:
-
-**Pillar 3: Market Perception** 
 
 21. **Select** the workspace in [Task 2](#task-2-power-bi-workspace-creation).
 
@@ -436,7 +434,7 @@ Do the following to pin visuals to the dashboard you just created:
 
 	![Select Workspace.](media/power-bi-report-14.png)
 	
-34. **Hover** on Deep Dive chicklet and **click** pin button.
+34. **Hover** on Predictive and Prescriptive Analytics chiclet and **click** pin button.
 
 	![Hover and Click.](media/power-bi-report-21.png)
 	
