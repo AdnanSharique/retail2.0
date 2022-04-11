@@ -130,8 +130,65 @@ THIS DEMO/LAB PROVIDES CERTAIN SOFTWARE TECHNOLOGY/PRODUCT FEATURES AND FUNCTION
 
 	> **Note:** This workspace ID will be used during ARM template deployment.
 
+7. Go to your Power BI **workspace** and **click** on New button.
 
+8. Then **click** on **Streaming Dataset** option from the dropdown. 
 
+	![Select new and then steaming dataset.](media/power-bi-4.png)
+
+9. **Select API** from the list of options and **click** next. 
+
+10. **Enable** the ‘Historic data analysis’ 
+
+	![Select API then next.](media/power-bi-5.png)
+
+	![Switch Historical data analysis on.](media/power-bi-6.png)
+	
+11. **Enter** ‘Occupancy’ as dataset name and **enter** the column names in “values from stream” option from list below  and **click** on create button: 
+
+	| Field Name                        	| Type     |
+	|---------------------------------------|----------|
+	| BatteryLevel 				| number |
+	| visitors_cnt				| number |
+	| visitors_in				| number |
+	| visitors_out				| number |
+	| avg_aisle_time_spent			| number |
+	| avg_dwell_time			| number |
+	| DeviceID				| text |
+	| StoreId				| text |
+	| City					| text |
+	| EnqueuedTimeUTC			| datetime |
+	| RecordedonUTC				| datetime |
+
+	
+	![Create new streaming dataset.](media/power-bi-7.png)
+
+12. **Copy** the push url of dataset ‘Occupancy’ and place it in a notepad for later use.
+
+	![Provide the Push Url.](media/power-bi-8.png)
+	
+13. Similarly add two more datasets namely "Thermostat-Realtime" and "Video-Analytics-Realtime" and copy the push url for them respectively and place it in a notepad.
+
+	| Field Name                        	| Type     |
+	|---------------------------------------|----------|
+	| EnqueuedTimeUTC 			| datetime |
+	| DeviceId				| text |
+	| StoreId				| text |
+	| BatteryLevel				| number |
+	| Temp					| number |
+	| City					| text |
+	| Temp_UoM				| text |
+	
+	
+	| Field Name                        	| Type     |
+	|---------------------------------------|----------|
+	| Appliances 				| number |
+	| FathersdaySale			| number |
+	| BacktoSchool				| number |
+	| NewStoreOpening			| number |
+	| FashionableYou			| number |
+	| Recordedon				| datetime |
+	
 
 ### Task 3: Deploy the ARM Template
 
@@ -149,28 +206,27 @@ THIS DEMO/LAB PROVIDES CERTAIN SOFTWARE TECHNOLOGY/PRODUCT FEATURES AND FUNCTION
 
 6. **Enter** the Power BI workspace ID created in [Task 2](#task-2-power-bi-workspace-creation).
 
-7. **Enter** the power BI streaming dataset url for **Tax Collection Realtime dataset** you copied in step 12 of [Task 2](#task-2-power-bi-workspace-creation).
+7. **Enter** the power BI streaming dataset url for **Occupancy_data_Realtime_URL** you copied in step 12 of [Task 2](#task-2-power-bi-workspace-creation).
 
-8. **Click** ‘Review + Create’ button.
+8. **Enter** the power BI streaming dataset url for **Thermostat_telemetry_Realtime_URL** you copied in step 13 of [Task 2](#task-2-power-bi-workspace-creation).
+
+9. **Enter** the power BI streaming dataset url for **Livestreaming_video_analytics_Realtime_URL** you copied in step 13 of [Task 2](#task-2-power-bi-workspace-creation).
+
+10. **Click** ‘Review + Create’ button.
 
 	![The Custom deployment form is displayed with example data populated.](media/powerbi-deployment-1.png)
 
-
-9. **Click** the **Create** button once the template has been validated.
+11. **Click** the **Create** button once the template has been validated.
 
 	![Creating the template after validation.](media/powerbi-deployment-3.png)
-
-	> **NOTE:** You may also see message in red asking to agree to terms of service after validation on same screen as below.
 	
-	![Creating the template after validation.](media/agreement-error.png)
+	> **NOTE:** The provisioning of your deployment resources will take approximately 30 minutes.
 	
-	> **NOTE:** The provisioning of your deployment resources will take approximately 10 minutes.
-	
-10. **Stay** on the same page and wait for the deployment to complete.
+12. **Stay** on the same page and wait for the deployment to complete.
     
 	![A portion of the Azure Portal to confirm that the deployment is in progress.](media/microsoft-template.png)
     
-11. **Select** the **Go to resource group** button once your deployment is complete.
+13. **Select** the **Go to resource group** button once your deployment is complete.
 
 	![A portion of the Azure Portal to confirm that the deployment is in progress.](media/microsoft-template-2.png)
 
@@ -197,7 +253,7 @@ THIS DEMO/LAB PROVIDES CERTAIN SOFTWARE TECHNOLOGY/PRODUCT FEATURES AND FUNCTION
 4. In the Azure Cloud Shell window, ensure the PowerShell environment is selected and **enter** the following command to clone the repository files.
 Command:
 ```
-git clone -b retail2.0 https://github.com/microsoft/Azure-Analytics-and-AI-Engagement.git retail
+git clone -b retail2.0 --depth 1 --single-branch https://github.com/microsoft/Azure-Analytics-and-AI-Engagement.git retail
 ```
 
 ![Git Clone Command to Pull Down the demo Repository.](media/cloud-shell-4.png)
@@ -214,7 +270,7 @@ cd ./retail/retail
 
 6. Then **run** the PowerShell: 
 ```
-./SynapseSetup.ps1
+./retailSetup.ps1
 ```
     
 ![Commands to run the PowerShell Script.](media/cloud-shell-5.png)
@@ -328,7 +384,57 @@ cd ./retail/retail
 
 7. Perform the above action with the remaining 2  pipelines in the folder, the desired tables will be created under the newly created Lake database.
 
-### Task 6: Power BI reports and dashboard creation
+### Task 7: Azure Purview Setup
+
+1. Firstly you should **assign** Reader permission to the **Azure Purview** account starting with name "purviewretail..." for **Cosmos Account**, **Synapse Workspace** and **Storage Account** starting with name "stretail...". Once the permission has been granted, proceed with the following steps.
+
+2. From Azure Portal, **search** for azure purview resource in the resource group and **click** on the resource.
+
+	![Select Purview Resource.](media/purview-1.png)
+	
+3. The Azure Purview resource window will open, **click** on Open Azure Purview Studio and the Azure Purview Studio will open in a new window.
+
+	![Select Purview Resource.](media/purview-2.png)
+	
+4. **Click** on Manage Glossary in the Azure Purview Studio, the Glossary Terms window will open.
+
+	![Select Purview Resource.](media/purview-3.png)
+	
+5. **Click** on Import Terms in the Glossary Terms window.
+
+	![Select Purview Resource.](media/purview-4.png)
+
+6. A pop-up appears, **click** on Continue.
+
+	![Select Purview Resource.](media/purview-5.png)
+	
+7. **Click** on browse and **select** appropriate file and **click** open.
+
+	![Select Purview Resource.](media/purview-6.png)
+	
+8. **Click** on OK.
+	
+	![Select Purview Resource.](media/purview-7.png)
+	
+9. In the Azure Purview Studio **click** on Data map **goto** source and **select** Map view. Now expand the parent collection by **clicking** on the "+" sign.
+
+	![Select Purview Resource.](media/purview-8.png)
+
+10. All the sub collections will be visible, **click** on the "+" sign under AzureDataLakeStorage.
+
+	![Select Purview Resource.](media/purview-9.png)
+
+11. Under the datasource AzureDataLakeStorage **click** on View Details.
+
+	![Select Purview Resource.](media/purview-10.png)
+
+12. **Click** on New Scan, a window appears, here verify the default values in the different fields, **select** your collection name and finally **click** on Continue.
+
+	![Select Purview Resource.](media/purview-11.png)
+	
+13. **Repeat** the steps 11 and 12 for creating connections for all the other collections i.e. Synapse, CosmosDB and PowerBI.
+
+### Task 8: Power BI reports and dashboard creation
 
 1. **Open** Power BI and **Select** the Workspace, which is created in [Task 2](#task-2-power-bi-workspace-creation).
 	
