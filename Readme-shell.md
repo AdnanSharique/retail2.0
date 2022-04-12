@@ -42,12 +42,14 @@ THIS DEMO/LAB PROVIDES CERTAIN SOFTWARE TECHNOLOGY/PRODUCT FEATURES AND FUNCTION
   - [Task 3: Deploy the ARM Template](#task-3-deploy-the-arm-template)
   - [Task 4: Run the Cloud Shell to provision the demo resources](#task-4-run-the-cloud-shell-to-provision-the-demo-resources)
   - [Task 5: Lake Database creation and Pipeline execution](#task-5-lake-database-creation-and-pipeline-execution)
-  - [Task 6: Power BI reports and dashboard creation](#task-6-power-bi-reports-and-dashboard-creation)
+  - [Task 6: Data Explorer Setup](#task-6-data-explorer-setup)
+  - [Task 7: Azure Purview Setup](#task-7-azure-purview-setup)
+  - [Task 8: Power BI reports and dashboard creation](#task-6-power-bi-reports-and-dashboard-creation)
   	- [Steps to create Real time report](#steps-to-create-real-time-report)
   	- [Updating Dashboard and Report Ids in Web app](#updating-dashboard-and-report-ids-in-web-app)
-  - [Task 7: QnAmaker and LogicApp Configuration](#task-7-qnamaker-and-logicapp-configuration)
-  - [Task 8: Pause or Resume script](#task-8-pause-or-resume-script)
-  - [Task 9: Clean up resources](#task-9-clean-up-resources)
+  - [Task 9: QnAmaker and LogicApp Configuration](#task-7-qnamaker-and-logicapp-configuration)
+  - [Task 10: Pause or Resume script](#task-8-pause-or-resume-script)
+  - [Task 11: Clean up resources](#task-9-clean-up-resources)
 
 <!-- /TOC -->
 
@@ -327,32 +329,18 @@ cd ./retail/retail
 20. You will now be prompted to **enter** the resource group name in the Azure Cloud Shell. Type the same resource group name that you created in [Task 1](#task-1-create-a-resource-group-in-azure). – 'DDiB-Retail-Lab'.
 
 	![Enter Resource Group name.](media/cloud-shell-14.png)
+	
+21. Now you will be prompted whether you have an unlimited video indexer account, **press** enter key.
 
-21. You will get another code to authenticate an Azure PowerShell script for creating reports in Power BI. **Copy** the code.
-	> **Note:**
-	> Note: You may see errors in script execution if you  do not have necessary permissions for cloudshell to manipulate your Power BI workspace. In such case follow this document [Power BI Embedding](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/blob/retail/retaildemo/Power%20BI%20Embedding.md) to get the necessary permissions assigned. You’ll have to manually upload the reports to your Power BI workspace by downloading them from this location [Reports](https://github.com/microsoft/Azure-Analytics-and-AI-Engagement/tree/retail/retaildemo/artifacts/reports). Or you can execute the PowerBI Subscript from local PowerShell. 
+	![Enter Resource Group name.](media/cloud-shell-15.png)
 
-22. **Click** the link [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin).
+22. After the complete script has been executed, you get to see a messages "--Execution Complete--", now **go to** the Azure Portal and **search** for app services, **open** each one of them.
 
-      ![Click the link.](media/cloud-shell-16.png)
-      
-23. A new browser window will launch. **Paste** the code that you copied from the shell in step 21.
+	![Enter Resource Group name.](media/cloud-shell-16.png)
+	
+23. **Click** on the browse button for each of the service apps once, a new window will appear, **close** the window.
 
-	![Paste the code.](media/cloud-shell-17.png)
-
-	> Note: Make sure to provide the device code before it expires and let the script run till completion.
-
-24. **Select** the same user to authenticate which you used for signing into the Azure Portal in [Task 1](#task-1-create-a-resource-group-in-azure). 
-
-	![Select the same user.](media/cloud-shell-18.png)
-
-25. **Close** the browser tab once you see the message window at right and go back to your Azure Cloud Shell execution window.
-
-	![Close the browser.](media/cloud-shell-19.png)
-
-	> **Note:** The deployment will take approximately 50-55 minutes to complete. Keep checking the progress with messages printed in the console to avoid timeout.
-
-26. After complete script has been executed, you get to see a messages "--Execution Complete--".
+	![Enter Resource Group name.](media/cloud-shell-17.png)
       
 ### Task 5: Lake Database creation and Pipeline execution
 
@@ -384,6 +372,42 @@ cd ./retail/retail
 
 7. Perform the above action with the remaining 2  pipelines in the folder, the desired tables will be created under the newly created Lake database.
 
+### Task 6: Data Explorer Setup
+
+1. In the Azure Portal **search** for synapse and **click** on the synapse resource.
+
+	![Adx.](media/adx-1.png)
+	
+2. In the synpase resource **click** on the Open Synapse Studio.
+
+	![Adx.](media/adx-2.png)
+	
+3. In the synapse studio **select** data, under workspace, **expand** Data Explorer Databases, **click** on the three dots and **click** on Open in Azure Data Explorer.
+	
+	![Adx.](media/adx-3.png)
+	
+4. In the Data Explorer Studio under data section **click** on Ingest new data.
+
+	![Adx.](media/adx-4.png)
+	
+5. In the Ingest new data, under destination tab, select appropriate values in the respective fields, in Cluster **select** the kusto pool name, in the Database select "RetailDB" database, in the Table field **enter** the table name i.e. Occupancy and then **click** on Next.
+
+	![Adx.](media/adx-5.png)
+	
+6. Under the source tab, **select** Source type as "Event Hub", in subscription **select** your subscription, in Event Hub Namespace **select** you eventhub namespace i.e. "adx-thermostat-occupancy-...", in Event Hub **enter** "occupancy", in Data connection name **select** "RetailDB-occupancy", in Consumer group **select** default, in compression **select** None and then **click** on Next.
+
+	![Adx.](media/adx-6.png)
+	
+7. Wait for some time for data preview to load, and then **click** on Next:Start Ingestion.
+
+	![Adx.](media/adx-7.png)
+	
+8. Once the Continuous ingestion from Event Hub has been established **click** on Close.
+
+	![Adx.](media/adx-8.png)
+	
+9. Repeat above step from 4 to 8, replacing few values, i.e. in step 5, this time **enter** the table name as "Thermostat", in step 6 **enter** Event Hub as "thermostat".
+	
 ### Task 7: Azure Purview Setup
 
 1. Firstly you should **assign** Reader permission to the **Azure Purview** account starting with name "purviewretail..." for **Cosmos Account**, **Synapse Workspace** and **Storage Account** starting with name "stretail...". Once the permission has been granted, proceed with the following steps.
@@ -534,11 +558,11 @@ Follow these steps to create the Power BI dashboard:
 ### Updating Dashboard and Report Ids in Web app
 
 
-### Task 7: QnAmaker and LogicApp Configuration
+### Task 9: QnAmaker and LogicApp Configuration
 
 
 
-### Task 8: Pause or Resume script
+### Task 10: Pause or Resume script
 
 > **Note:** Please perform these steps after your demo is done and you do not need the environment anymore. Also ensure you Resume the environment before demo if you paused it once. 
  
@@ -587,7 +611,7 @@ Follow these steps to create the Power BI dashboard:
 
 	![Enter your choice.](media/authentication-4.png)
 
-### Task 9: Clean up resources
+### Task 11: Clean up resources
 
 > **Note: Perform these steps after your demo is done and you do not need the resources anymore**
 
